@@ -33,6 +33,16 @@ const router = new Router({
       name: 'Products',
       component: () => import('../views/Products.vue')
     },
+    {
+      path: '/administrator',
+      name: 'Administrator',
+      component: () => import('../views/Admin.vue')
+    },
+    {
+      path: '/store-manage',
+      name: 'StoreManage',
+      component: () => import('../views/Admin.vue')
+    },
   ]
 });
 

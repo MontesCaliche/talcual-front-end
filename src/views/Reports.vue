@@ -23,7 +23,7 @@
     <!-- Reports -->
     <div class="container-fluid">
       <div class="row mx-3">
-          <button class="btn btn-lg btn-success">Crear reporte</button>
+          <button data-toggle="modal" data-target="#modalCreateReport" class="btn btn-lg btn-success">Crear reporte</button>
       </div>
       <div class="row">
         <div class="col my-3">
@@ -158,11 +158,17 @@
         </div>
       </div>
     </div>
+    <CreateReport />
   </div>
 </template>
 
 <script>
-export default {};
+import CreateReport from "../components/CreateReport.vue";
+export default {
+  components: {
+    CreateReport,
+  },
+};
 </script>
 
 <style>

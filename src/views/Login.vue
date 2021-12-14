@@ -36,7 +36,7 @@
               >
             </div>
 
-            <button type="submit" class="btn btn-outline-primary btn-block">
+            <button @click="login" type="submit" class="btn btn-outline-primary btn-block">
               Iniciar Sesion
             </button>
             <div class="my-3  mx-auto" id="google-signin">google</div>
@@ -111,6 +111,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   name: "Login",
   data() {
@@ -121,6 +122,20 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["saveUser"]),
+    login() {
+      this.axios
+        .post("/login", this.user)
+        .then((res) => {
+           const token = res.data.token;
+           this.saveUser(token);
+        })
+        .catch((e) => {
+          if (e) {
+            this.message = e.response.data.message;
+          }
+        });
+    },
     onSignIn(googleUser) {
       const profile = googleUser.getBasicProfile();
       console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.

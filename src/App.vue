@@ -7,18 +7,16 @@
 
 <script>
 import Navbar from "./components/Navbar";
+import {mapActions} from 'vuex'
 export default {
   components: {
     Navbar,
   },
-  data() {
-    return {
-      
-    }
-  },
   methods: {
+      ...mapActions(['readToken'])
   },
   created () {
+     this.readToken();
   },
 
 };

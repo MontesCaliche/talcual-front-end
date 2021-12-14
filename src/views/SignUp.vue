@@ -1,10 +1,10 @@
 <template>
   <div class="container my-2">
     <div class="row">
-      <div class="card mx-auto my-3  w-50">
+      <div class="card mx-auto my-3 w-50">
         <div class="card-body">
           <img class="imagen my-3" src="../assets/pagWeb.png" />
-          <h3 class="mx-auto my-3 ">Crear Cuenta</h3>
+          <h3 class="mx-auto my-3">Crear Cuenta</h3>
           <form @submit.prevent="createUser">
             <div class="mb-3">
               <label for="input-name" class="form-label">Nombre</label>
@@ -51,7 +51,7 @@
             <button type="submit" class="btn btn-primary btn-block">
               Crear mi cuenta
             </button>
-            <div class="my-3  mx-auto" id="google-signin">google</div>
+            <div class="my-3 mx-auto" id="google-signin">google</div>
           </form>
           <div v-if="message != ''">
             <p>{{ message }}</p>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { mapActions, mapState} from "vuex";
+import { mapActions} from "vuex";
 export default {
   name: "SignUp",
   data() {
@@ -74,23 +74,49 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["saveUser"]),
+    createUser() {
+      if (this.user.password === this.rpassword) {
+        if (this.user.password.length >= 8) {
+          this.axios
+            .post("/new-user", this.user)
+            .then((res) => {
+              this.axios
+                .post("/login", {
+                  email: this.user.email,
+                  password: this.user.password,
+                })
+                .then((res) => {
+                  const token = res.data.token;
+                  this.saveUser(token);
+                });
+            })
+            .catch((err) => {
+              console.log(err.response)
+              this.message = err.response.data.message;
+            });
+        } else {
+          this.message = "La contraseña debe contener 8 o mas caracteres";
+        }
+      } else {
+        this.message = "Las contraseñas no coinciden";
+      }
+    },
 
-     onSignIn(googleUser) {
+    onSignIn(googleUser) {
       const profile = googleUser.getBasicProfile();
       console.log("ID: " + profile.getId()); // Do not send to your backend! Use an ID token instead.
       console.log("Name: " + profile.getName());
       console.log("Image URL: " + profile.getImageUrl());
       console.log("Email: " + profile.getEmail()); // This is null if the 'email' scope is not present.
     },
-
   },
-   computed: {
- },
- mounted () {
+  computed: {},
+  mounted() {
     gapi.signin2.render("google-signin", {
       onsuccess: this.onSignIn,
     });
- },
+  },
 };
 </script>
 
@@ -98,7 +124,7 @@ export default {
 .card {
   background: transparent !important;
   border: 3px solid #9ae2d4;
-  color:#14254C
+  color: #14254c;
 }
 
 .imagen {
