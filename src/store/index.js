@@ -34,12 +34,14 @@ export default new Vuex.Store({
               state.userDB.data = res.data
 
               if (state.userDB.data.url_img === undefined){
-                state.url_img = `${axios.defaults.baseURL}/uploads/logo-oolloo.png`
-              }else if (state.userDB.data.img === ''){
-                state.url_img = `${axios.defaults.baseURL}/uploads/logo-oolloo.png`
+                state.url_img = `${axios.defaults.baseURL}/uploads/logo.png`
+              }else if (state.userDB.data.url_img === ''){
+                console.log("entre")
+                state.url_img = `${axios.defaults.baseURL}/uploads/logo.png`
               }else{
                 state.url_img= state.userDB.data.url_img
               }
+              console.log(state.url_img)
             })
       }
   }

@@ -18,9 +18,9 @@ Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
 const localurl = 'http://localhost:3000'
-const serverurl = 'https://oolloo-app-new.herokuapp.com'
+const serverurl = 'https://talcual-uam-app.herokuapp.com/'
 
-axios.defaults.baseURL = localurl;
+axios.defaults.baseURL = serverurl;
 
 new Vue({
   router,

@@ -1,7 +1,9 @@
 <template>
   <div>
     <nav class="navbar navbar-expand-lg navbar-dark ">
-      <img style="height: 41.53px" src="../assets/logo-oolloo.png" />
+      <img style="height: 41.53px" src="../assets/logo.png" />
+      <img style="height: 41.53px" src="../assets/university-background.png" />
+      
       <router-link  class="navbar-brand mx-3" to="/">Tal cual Uam</router-link>
     
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -25,12 +27,12 @@
         </ul>
         <div v-if="isActive" class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-              <img style="height: 41.53px; width: 41.53px" class="rounded-circle" src="../assets/logo-oolloo.png" />
+              <img style="height: 41.53px; width: 41.53px" class="rounded-circle" :src="url_img" />
                 <span class="caret "> Perfil</span>
               </button>
               <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
                 <li role="presentation" class="mx-2" ><a role="menuitem" tabindex="-1" href="/reports" v-if="rol != 'administrator'">Home</a></li>
-                <li role="presentation"  class="mx-2"><a role="menuitem" tabindex="-1" href="" v-if="rol != 'administrator'">Perfil</a></li>
+                <li role="presentation"  class="mx-2"><a role="menuitem" tabindex="-1" href="/profile" v-if="rol != 'administrator'">Perfil</a></li>
                 <li role="presentation" class="mx-2"><a role="menuitem" tabindex="-1"  @click="signOff" href="/login">Cerrar Sesion</a></li>
               </ul>
         </div>

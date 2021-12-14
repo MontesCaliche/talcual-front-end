@@ -43,6 +43,11 @@ const router = new Router({
       name: 'StoreManage',
       component: () => import('../views/Admin.vue')
     },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: () => import('../views/Profile.vue')
+    },
   ]
 });
 
