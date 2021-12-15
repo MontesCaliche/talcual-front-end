@@ -22,136 +22,59 @@
     <!-- Reports -->
     <div class="container-fluid">
       <div class="row mx-3">
-          <button class="btn btn-lg btn-success">Crear producto</button>
+          <button data-toggle="modal" data-target="#modalCreateProduct"  class="btn btn-lg btn-success">Crear producto</button>
       </div>
       <div class="row">
-        <div class="col my-3">
+        <div v-for="(product, index) in products" :key="index" class="col my-3">
           <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/producto.jpg" alt="Card image cap" />
+            <img class="card-img-top" :src="product.imageurl" alt="Card image cap" />
             <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
+              <h5 class="card-title">{{product.productName}}</h5>
+              <label for="">Ciudad: {{product.productCity}}</label>
+              <label for="">Categoria: {{product.productCategory}}</label>
+              <label for="">Precio: {{product.productPrice}}</label>
               <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
+                {{product.productDescription}}
               </p>
               <a href="#" class="btn btn-primary">ver mas...</a>
             </div>
           </div>
         </div>
-        <div class="col my-3">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/producto.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col my-3">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/producto.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col my-3">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/producto.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col my-3">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/producto.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col my-3">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/producto.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col my-3">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/producto.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col my-3">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/producto.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col my-3">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/producto.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-
-      
-       
       </div>
+      <CreateProduct />
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import CreateProduct from "../components/CreateProduct.vue";
+import { mapState } from "vuex";
+export default {
+  components: {
+    CreateProduct,
+  },
+  data() {
+    return {
+      products: []
+    }
+  },
+  created () {
+
+    const token = this.token;
+
+    let config = {
+                headers: {
+                    token
+                }
+            }
+    this.axios("/products",config).then((res)=>{
+      this.products = res.data;
+    }).catch(err=>console.log(err))
+  },
+  computed: {
+    ...mapState(["userDB","token"]),
+  },
+};
 </script>
 
 <style>
