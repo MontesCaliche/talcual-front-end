@@ -20,7 +20,7 @@ Vue.config.productionTip = false
 const localurl = 'http://localhost:3000'
 const serverurl = 'https://talcual-uam-app.herokuapp.com/'
 
-axios.defaults.baseURL = localurl;
+axios.defaults.baseURL = serverurl;
 
 new Vue({
   router,
