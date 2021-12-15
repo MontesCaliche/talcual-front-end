@@ -19,154 +19,61 @@
         </div>
       </div>
     </div>
-    
-    <!-- Reports -->
+      <!-- Reports -->
     <div class="container-fluid">
       <div class="row mx-3">
-          <button data-toggle="modal" data-target="#modalCreateReport" class="btn btn-lg btn-success">Crear reporte</button>
+          <button data-toggle="modal" data-target="#modalCreateReport"  class="btn btn-lg btn-success">Crear reporte</button>
       </div>
       <div class="row">
-        <div class="col my-3">
+        <div v-for="(report, index) in reports" :key="index" class="col my-3">
           <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/reporte.jpg" alt="Card image cap" />
+            <img class="card-img-top" :src="report.imageurl" alt="Card image cap" />
             <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
+              <h5 class="card-title">{{report.title}}</h5>
+              <label for="">Precio Anterior: {{report.lastPrice}}</label>
+              <label for="">Precio Actual: {{report.currentPrice}}</label>
+              <label for="">Categoria: {{report.category}}</label>
               <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col my-3">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/reporte.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/reporte.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/reporte.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/reporte.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/reporte.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/reporte.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/reporte.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/reporte.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <a href="#" class="btn btn-primary">ver mas...</a>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="../assets/reporte.jpg" alt="Card image cap" />
-            <div class="card-body">
-              <h5 class="card-title">REPORTE</h5>
-              <p class="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
+                {{report.description}}
               </p>
               <a href="#" class="btn btn-primary">ver mas...</a>
             </div>
           </div>
         </div>
       </div>
+      <CreateReport />
     </div>
-    <CreateReport />
   </div>
 </template>
 
 <script>
 import CreateReport from "../components/CreateReport.vue";
+import { mapState } from "vuex";
 export default {
   components: {
     CreateReport,
+  },
+   computed: {
+    ...mapState(["userDB","token"]),
+  },
+    data() {
+    return {
+      reports: []
+    }
+  },
+  created () {
+
+    const token = this.token;
+
+    let config = {
+                headers: {
+                    token
+                }
+            }
+    this.axios("/reports",config).then((res)=>{
+      this.reports = res.data;
+      console.log(res.data)
+    }).catch(err=>console.log(err))
   },
 };
 </script>

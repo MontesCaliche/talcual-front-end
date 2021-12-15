@@ -19,7 +19,7 @@
         </div>
       </div>
     </div>
-    <!-- Reports -->
+    <!-- Products -->
     <div class="container-fluid">
       <div class="row mx-3">
           <button data-toggle="modal" data-target="#modalCreateProduct"  class="btn btn-lg btn-success">Crear producto</button>

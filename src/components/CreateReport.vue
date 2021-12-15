@@ -4,7 +4,7 @@
       class="modal fade"
       id="modalCreateReport"
       tabindex="-1"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="Crear reporte"
       aria-hidden="true"
     >
       <div class="modal-dialog modal-lg">
@@ -29,6 +29,7 @@
                   class="form-control"
                   id="inputTitle"
                   aria-describedby="reportTitle"
+                  v-model="report.title"
                 />
               </div>
               <div class="form-group">
@@ -39,6 +40,7 @@
                       type="number"
                       class="form-control"
                       id="inputLastPrice"
+                      v-model="report.lastPrice"
                     />
                   </div>
                   <div class="col">
@@ -47,18 +49,20 @@
                       type="number"
                       class="form-control"
                       id="inputCurrentPrice"
+                      v-model="report.currentPrice"
                     />
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <label for="inputReportcategory">Categoría del reporte</label>
-                <select class="form-control" id="inputReportcategory">
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
+                <select v-model="report.category" class="form-control" id="inputReportcategory">
+                   <option>Alimenticio</option>
+                  <option>Ferreteria</option>
+                  <option>Juguetería</option>
+                  <option>Herramientas</option>
+                  <option>Tecnología</option>
+                  <option>Electrodomesticos</option>
                 </select>
               </div>
               <div class="form-group">
@@ -69,7 +73,27 @@
                   class="form-control"
                   id="inputDescription"
                   rows="3"
+                  v-model="report.description"
                 ></textarea>
+              </div>
+               <div>
+                <img id="previewSingle" class="imagen" src="../assets/reporte.jpg" />
+                <br />
+                <input
+                  accept="image/*"
+                  type="file"
+                  class="d-none"
+                  name="image-profile"
+                  id="formFile"
+                />
+                <input
+                  onclick="document.getElementById('formFile').click()"
+                  class="btn btnPregunta btn-sm"
+                  type="button"
+                  value="Seleccionar Imágen del reporte"
+                  name="btn-upload-image"
+                  id="btn-upload-image"
+                />
               </div>
               <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
             </form>
@@ -82,7 +106,7 @@
             >
               Close
             </button>
-            <button type="button" class="btn btn-primary">
+            <button @click="createReport" type="button" class="btn btn-primary">
               Guardar cambios
             </button>
           </div>
@@ -109,15 +133,83 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "createReport",
   data() {
     return {
       message: "",
-      message2: "",
+      message2: "", 
+      report:{
+        title:'',
+        lastPrice:0,
+        currentPrice:0,
+        category:'',
+        description:''
+      }
     };
+  },
+  methods: {
+    createReport() {
+      let file = document.getElementById("formFile").files;
+
+      let formData = new FormData();
+
+      formData.append("user_id", this.userDB.data._id);
+      formData.append("email", this.userDB.data.email);
+      formData.append("title", this.report.title);
+      formData.append("lastPrice", this.report.lastPrice);
+      formData.append("currentPrice", this.report.currentPrice);
+      formData.append("category", this.report.category);
+      formData.append("description", this.report.description);
+      formData.append("file-img", file[0]);
+      formData.append("urlServer", this.axios.defaults.baseURL);
+
+       if (!file || !file.length) {
+        formData.append("containFile", false);
+      } else {
+        formData.append("containFile", true);
+      }
+
+      this.axios.post('/reports',formData,{
+          headers: { "Content-Type": "multipart/form-data" },
+        }).then((res)=>{
+          console.log(res.data)
+          location.reload()
+        }).catch(err=>console.log(err.response))
+
+    },
+    previewImgUser: function () {
+      let previewSingle = document.getElementById("previewSingle");
+      let formFile = document.getElementById("formFile");
+
+      if (formFile != null) {
+        formFile.addEventListener("change", () => {
+          let _file = formFile.files;
+
+          if (!_file || !_file.length) {
+            previewSingle.src = this.my.img;
+            return;
+          }
+
+          const firstFile = _file[0];
+          const objUrl = URL.createObjectURL(firstFile);
+          previewSingle.src = objUrl;
+        });
+      }
+    },
+  },
+   mounted() {
+    this.previewImgUser();
+  },
+   computed: {
+    ...mapState(["url_img", "userDB"]),
   },
 };
 </script>
 
-<style></style>
+<style>
+.imagen {
+  width: 150px;
+  height: 150px;
+}</style>
